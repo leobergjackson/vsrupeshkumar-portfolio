@@ -1,131 +1,177 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
-import { useTypingEffect } from '@/hooks';
-import { typingPhrases, personal } from '@/lib/data';
+import { useEffect, useRef, useState } from "react";
+import { StarMascot } from "@/components/visuals/Visuals";
+import { heroCopy, identity, typingPhrases } from "@/lib/data";
 
-export function Hero() {
-  const { displayText } = useTypingEffect({
-    strings: typingPhrases,
-  });
+type Theme = "dark" | "light";
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.3 },
-    },
-  };
+function HeroParticles() {
+  const ref = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    let w = (canvas.width = canvas.offsetWidth * window.devicePixelRatio);
+    let h = (canvas.height = canvas.offsetHeight * window.devicePixelRatio);
+    const N = window.innerWidth < 768 ? 22 : 50;
+    const parts = Array.from({ length: N }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      r: 0.8 + Math.random() * 1.4,
+    }));
+    let raf = 0;
+    const tick = () => {
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < parts.length; i++) {
+        for (let j = i + 1; j < parts.length; j++) {
+          const dx = parts[i].x - parts[j].x;
+          const dy = parts[i].y - parts[j].y;
+          const d = Math.hypot(dx, dy);
+          const maxD = 140 * window.devicePixelRatio;
+          if (d < maxD) {
+            ctx.strokeStyle = `rgba(0,255,178,${(1 - d / maxD) * 0.18})`;
+            ctx.lineWidth = window.devicePixelRatio * 0.5;
+            ctx.beginPath();
+            ctx.moveTo(parts[i].x, parts[i].y);
+            ctx.lineTo(parts[j].x, parts[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      for (const p of parts) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+        ctx.fillStyle = "rgba(0,255,178,0.7)";
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    tick();
+    const onResize = () => {
+      w = canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+      h = canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+  return <canvas ref={ref} className="hero-particles" />;
+}
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' },
-    },
-  };
+export function Hero({ theme }: { theme: Theme }) {
+  const [typed, setTyped] = useState("");
+  const idx = useRef(0);
+  const ch = useRef(0);
+  const phase = useRef<"typing" | "hold" | "deleting">("typing");
+
+  useEffect(() => {
+    let to: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      const phrases = typingPhrases;
+      const cur = phrases[idx.current];
+      if (phase.current === "typing") {
+        ch.current++;
+        setTyped(cur.slice(0, ch.current));
+        if (ch.current >= cur.length) {
+          phase.current = "hold";
+          to = setTimeout(tick, 1800);
+          return;
+        }
+        to = setTimeout(tick, 40 + Math.random() * 50);
+      } else if (phase.current === "hold") {
+        phase.current = "deleting";
+        to = setTimeout(tick, 30);
+      } else {
+        ch.current--;
+        setTyped(cur.slice(0, ch.current));
+        if (ch.current <= 0) {
+          idx.current = (idx.current + 1) % phrases.length;
+          phase.current = "typing";
+          to = setTimeout(tick, 200);
+        } else {
+          to = setTimeout(tick, 20);
+        }
+      }
+    };
+    to = setTimeout(tick, 600);
+    return () => clearTimeout(to);
+  }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Grid */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-teal/20 via-transparent to-accent-violet/20" />
+    <section id="home" className="hero">
+      <div className="hero-grid" />
+      <HeroParticles />
+
+      <div className="live-pill">
+        <span className="pulse" />
+        Open to opportunities
       </div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="relative z-10 container text-center px-4"
-      >
-        {/* Status Badge */}
-        <motion.div variants={itemVariants} className="mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-bg-tertiary border border-border-subtle rounded-full">
-            <div className="w-2 h-2 bg-accent-teal rounded-full animate-pulse-glow" />
-            <span className="font-mono text-xs font-medium text-text-muted">Open to opportunities</span>
-          </div>
-        </motion.div>
+      <div className="hero-mascot-wrap">
+        <div className="hero-mascot">
+          <StarMascot light={theme === "light"} />
+        </div>
+      </div>
 
-        {/* Headline */}
-        <motion.h1
-          variants={itemVariants}
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-black leading-tight uppercase tracking-tighter mb-6"
-        >
-          Building at the<br />
-          edge of what's<br />
-          possible.
-        </motion.h1>
+      <div className="hero-content">
+        <h1 className="hero-headline">
+          <span className="hero-line">
+            <span>{heroCopy.line1}</span>
+          </span>
+          <span className="hero-line">
+            <span>{heroCopy.line2}</span>
+          </span>
+          <span className="hero-line">
+            <span>{heroCopy.line3}</span>
+          </span>
+        </h1>
 
-        {/* Subheader */}
-        <motion.p variants={itemVariants} className="font-mono text-xs md:text-sm uppercase tracking-widest text-text-muted mb-6">
+        <div className="hero-subline">
           AI / ML Engineer · Web3 Builder · Full Stack · Open-Source Contributor
-        </motion.p>
+        </div>
 
-        {/* Typing Animation */}
-        <motion.div variants={itemVariants} className="mb-8 h-6 md:h-8">
-          <code className="font-code text-sm md:text-base text-accent-teal">
-            {displayText}
-            <span className="animate-bounce">▌</span>
-          </code>
-        </motion.div>
+        <div className="hero-typing">{typed || " "}</div>
 
-        {/* Body Text */}
-        <motion.p variants={itemVariants} className="max-w-2xl mx-auto text-base md:text-lg text-text-muted mb-12 leading-relaxed">
-          {personal.degree} at {personal.university}. I build systems at the intersection of AI research, decentralized
-          protocols, and full-stack engineering — the kind of systems that don't exist yet.
-        </motion.p>
+        <p className="hero-body">{heroCopy.body}</p>
 
-        {/* CTAs */}
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
-          <a
-            href="#projects"
-            className="px-8 py-3 bg-text-primary text-bg-primary rounded-full font-body font-medium hover:shadow-glow-teal transition-all"
-          >
-            View My Work
+        <div className="hero-ctas">
+          <a className="cta" href="#projects">
+            <span className="cta-text">View My Work</span>
+            <span className="cta-circle">→</span>
           </a>
-          <a
-            href={personal.resumeUrl}
-            download
-            className="px-8 py-3 border border-border-strong text-text-primary rounded-full font-body font-medium hover:border-accent-teal hover:text-accent-teal transition-all"
-          >
-            Download Resume ↓
+          <a className="cta ghost" href={identity.github} target="_blank" rel="noreferrer">
+            <span className="cta-text">Download Resume</span>
+            <span className="cta-circle">↓</span>
           </a>
-        </motion.div>
+        </div>
+      </div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          variants={itemVariants}
-          className="flex justify-center"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <button
-            onClick={() => {
-              document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="w-12 h-12 rounded-full bg-accent-teal text-bg-primary flex items-center justify-center hover:shadow-glow-teal transition-all"
-          >
-            <ArrowDown size={20} />
-          </button>
-        </motion.div>
+      <div className="hero-corner bl">
+        <a href={identity.github} target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+        <span className="dot">·</span>
+        <a href={identity.linkedin} target="_blank" rel="noreferrer">
+          LinkedIn
+        </a>
+        <span className="dot">·</span>
+        <a href={`mailto:${identity.email}`}>Email</a>
+      </div>
+      <div className="hero-corner br">Scroll to explore ↓</div>
 
-        {/* Footer Links */}
-        <motion.div variants={itemVariants} className="absolute bottom-8 left-0 right-0 flex justify-center gap-8">
-          <a href={personal.github} target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-text-muted hover:text-accent-teal transition-colors">
-            GitHub
-          </a>
-          <span className="text-text-dim">·</span>
-          <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-text-muted hover:text-accent-teal transition-colors">
-            LinkedIn
-          </a>
-          <span className="text-text-dim">·</span>
-          <a href={`mailto:${personal.email}`} className="font-mono text-xs text-text-muted hover:text-accent-teal transition-colors">
-            Email
-          </a>
-        </motion.div>
-      </motion.div>
+      <a className="hero-scroll" href="#projects" aria-label="Scroll">
+        ↓
+      </a>
     </section>
   );
 }

@@ -1,16 +1,18 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const dotRef = useRef<HTMLDivElement | null>(null);
+  const ringRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    document.body.classList.add("has-cursor");
     const dot = dotRef.current;
     const ring = ringRef.current;
-    if (!dot || !ring) return;
-
     let dx = 0,
       dy = 0,
       rx = 0,
@@ -19,45 +21,38 @@ export function CustomCursor() {
     const onMove = (e: MouseEvent) => {
       dx = e.clientX;
       dy = e.clientY;
-      if (dot) {
-        dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%, -50%)`;
-      }
+      if (dot) dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%,-50%)`;
     };
 
-    let raf: number;
+    let raf = 0;
     const tick = () => {
       rx += (dx - rx) * 0.18;
       ry += (dy - ry) * 0.18;
-      if (ring) ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      if (ring) ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
       raf = requestAnimationFrame(tick);
     };
+    raf = requestAnimationFrame(tick);
 
     const onOver = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement).closest('a, button, .interactive');
-      document.body.classList.toggle('cursor-hover', !!target);
+      const target = e.target as Element | null;
+      const t = target?.closest("a, button, .filter-pill, .faq-q, .cta, .project-card");
+      document.body.classList.toggle("cursor-hover", !!t);
     };
 
-    // Only enable on desktop with hover support
-    const canHover = window.matchMedia('(hover: hover)').matches;
-    if (canHover) {
-      document.body.classList.add('has-cursor');
-      window.addEventListener('mousemove', onMove);
-      window.addEventListener('mouseover', onOver);
-      raf = requestAnimationFrame(tick);
-    }
-
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseover", onOver);
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseover', onOver);
-      document.body.classList.remove('has-cursor');
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseover", onOver);
+      document.body.classList.remove("has-cursor");
     };
   }, []);
 
   return (
     <>
-      <div ref={dotRef} className="cursor-dot" />
-      <div ref={ringRef} className="cursor-ring" />
+      <div className="cursor-ring" ref={ringRef} />
+      <div className="cursor-dot" ref={dotRef} />
     </>
   );
 }

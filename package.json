@@ -11,29 +11,14 @@
   "dependencies": {
     "next": "16.2.6",
     "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "framer-motion": "^11.0.0",
-    "gsap": "^3.12.0",
-    "@tsparticles/react": "^3.0.0",
-    "@tsparticles/engine": "^3.0.0",
-    "react-fast-marquee": "^1.0.0",
-    "three": "^0.158.0",
-    "@react-three/fiber": "^8.16.0",
-    "@react-three/drei": "^9.102.0",
-    "react-hook-form": "^7.52.0",
-    "zod": "^3.23.0",
-    "@hookform/resolvers": "^3.4.0",
-    "next-themes": "^0.3.0",
-    "lucide-react": "^0.408.0"
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }

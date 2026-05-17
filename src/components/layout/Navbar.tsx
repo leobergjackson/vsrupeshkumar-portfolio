@@ -1,138 +1,119 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { nav, personal } from '@/lib/data';
-import { Github, Linkedin, Mail, Menu, X } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { useEffect, useState } from "react";
+import { StarGlyph } from "@/components/visuals/Visuals";
+import { identity } from "@/lib/data";
 
-export function Navbar() {
+type Theme = "dark" | "light";
+
+const links = [
+  { href: "#home", label: "Home", plus: true },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#skills", label: "Skills" },
+  { href: "#contact", label: "Contact" },
+];
+
+export function Navbar({
+  theme,
+  setTheme,
+  openDrawer,
+}: {
+  theme: Theme;
+  setTheme: (t: Theme) => void;
+  openDrawer: () => void;
+}) {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 h-16 z-40 transition-all duration-300 ${
-          scrolled
-            ? 'backdrop-blur-lg bg-bg-primary/70 border-b border-border-subtle'
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="container h-full flex items-center justify-between">
-          {/* Left: Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 bg-accent-teal rounded-full" />
-            <span className="font-mono text-sm font-medium">Rupesh Kumar</span>
-          </div>
+      <header className={`nav ${scrolled ? "scrolled" : ""}`}>
+        <div className="nav-left">
+          <StarGlyph size={20} color="var(--accent)" />
+          <span className="nav-brand-name">Rupesh Kumar</span>
+        </div>
 
-          {/* Center: Theme Toggle */}
-          <div className="hidden md:flex gap-1 bg-bg-tertiary rounded-full p-1 border border-border-subtle">
-            <button
-              onClick={() => setTheme('light')}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
-                theme === 'light' ? 'bg-bg-secondary text-text-primary' : 'text-text-muted'
-              }`}
-            >
+        <div className="nav-center">
+          <div className="theme-pill" role="tablist">
+            <div className="theme-pill-thumb" />
+            <button data-active={theme === "light"} onClick={() => setTheme("light")}>
               Light
             </button>
-            <button
-              onClick={() => setTheme('dark')}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
-                theme === 'dark' ? 'bg-bg-secondary text-text-primary' : 'text-text-muted'
-              }`}
-            >
+            <button data-active={theme === "dark"} onClick={() => setTheme("dark")}>
               Dark
             </button>
           </div>
-
-          {/* Right: Nav Links */}
-          <nav className="hidden md:flex items-center gap-8">
-            {nav.links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-text-muted hover:text-text-primary transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <a
-              href={nav.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-text-muted hover:text-accent-teal transition-colors"
-            >
-              GitHub →
-            </a>
-          </nav>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 hover:bg-bg-tertiary rounded-lg transition-colors"
-          >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
         </div>
+
+        <nav className="nav-right">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="nav-link">
+              {l.plus && <span className="plus">+</span>}
+              {l.label}
+            </a>
+          ))}
+          <a
+            href={identity.github}
+            target="_blank"
+            rel="noreferrer"
+            className="nav-link has-arrow"
+          >
+            GitHub
+          </a>
+          <button
+            className="cta"
+            style={{ padding: "4px 4px 4px 18px", fontSize: 13 }}
+            onClick={openDrawer}
+          >
+            <span className="cta-text">Let&apos;s connect</span>
+            <span className="cta-circle" style={{ width: 32, height: 32, fontSize: 14 }}>
+              →
+            </span>
+          </button>
+        </nav>
+
+        <button className="nav-mobile-toggle" onClick={() => setMenuOpen(true)} aria-label="Open menu">
+          ☰
+        </button>
       </header>
 
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="fixed inset-0 top-16 z-30 bg-bg-primary/95 backdrop-blur-lg md:hidden p-6"
+      <div
+        className={`mobile-menu ${menuOpen ? "open" : ""}`}
+        onClick={() => setMenuOpen(false)}
+      >
+        <button
+          className="drawer-close"
+          style={{ alignSelf: "flex-end" }}
+          aria-label="Close menu"
         >
-          <nav className="flex flex-col gap-4">
-            {nav.links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="text-lg font-display font-bold text-text-primary hover:text-accent-teal transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="border-t border-border-subtle pt-4 mt-4">
-              <div className="flex gap-4">
-                <a
-                  href={nav.social.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 hover:bg-bg-tertiary rounded-lg transition-colors"
-                >
-                  <Github size={18} />
-                </a>
-                <a
-                  href={nav.social.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 hover:bg-bg-tertiary rounded-lg transition-colors"
-                >
-                  <Linkedin size={18} />
-                </a>
-                <a
-                  href={`mailto:${nav.social.email}`}
-                  className="p-2 hover:bg-bg-tertiary rounded-lg transition-colors"
-                >
-                  <Mail size={18} />
-                </a>
-              </div>
-            </div>
-          </nav>
-        </motion.div>
-      )}
+          ×
+        </button>
+        {links.map((l) => (
+          <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}>
+            {l.label}
+          </a>
+        ))}
+        <a href={identity.github} target="_blank" rel="noreferrer">
+          GitHub →
+        </a>
+        <a
+          onClick={() => {
+            setMenuOpen(false);
+            openDrawer();
+          }}
+          style={{ color: "var(--accent)", cursor: "pointer" }}
+        >
+          Let&apos;s connect →
+        </a>
+      </div>
     </>
   );
 }
