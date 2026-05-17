@@ -1,0 +1,14 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "devCommand": "npm run dev",
+  "installCommand": "npm ci",
+  "env": {
+    "NEXT_PUBLIC_SITE_URL": "@site_url"
+  },
+  "github": {
+    "enabled": true,
+    "autoAlias": true,
+    "autoExposeSystemEnv": true
+  }
+}
