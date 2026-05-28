@@ -160,6 +160,8 @@ export const skills = [
   { n: "07", domain: "Cloud & DevOps", items: "AWS · Azure · Google Cloud · Docker · Kubernetes · Linux CLI · Git · GitHub · GitLab" },
   { n: "08", domain: "Hardware & IoT", items: "Arduino · Raspberry Pi · Jetson Nano" },
   { n: "09", domain: "Competitive Programming", items: "LeetCode Knight (peak 1938, top 3.51%) · Codeforces Specialist (1500+) · CodeChef 4-Star (1674) · 1100+ problems solved" },
+  { n: "10", domain: "Tools & Automation", items: "Postman · Figma · Prettier · openclaw · n8n" },
+  { n: "11", domain: "Spoken Languages", items: "English (Professional) · German (A1, in progress) · Japanese (N5, in progress)" },
 ];
 
 export const experience = [
@@ -199,6 +201,14 @@ export const programs = [
     tags: ["AI Systems", "Research", "NVIDIA"],
   },
   {
+    flag: "🇫🇷",
+    loc: "France · Créteil",
+    date: "June 22–26, 2026",
+    inst: "UPEC · Space Academy",
+    desc: "Selected Participant, “Build Your Own Satellite in 5 Days” International Summer School. Participated in an intensive hands-on program focused on satellite systems, space technology, and aerospace innovation.",
+    tags: ["Satellite Systems", "Space Tech", "Aerospace"],
+  },
+  {
     flag: "🇩🇪",
     loc: "Germany · Munich",
     date: "March 2025",
@@ -223,6 +233,8 @@ export const certifications = [
   { issuer: "EO College / ESA", name: "ML for Earth Observation · 2025" },
   { issuer: "Cisco Networking Academy", name: "CCNA · Modern AI · Data Science · Cybersecurity · JS Essentials" },
   { issuer: "MongoDB University", name: "MongoDB Basics for Students" },
+  { issuer: "Toastmasters International", name: "Active Member · Public Speaking & Debates" },
+  { issuer: "Youth Talk 2025", name: "Regional Semi-Finalist" },
 ];
 
 export const faq = [
