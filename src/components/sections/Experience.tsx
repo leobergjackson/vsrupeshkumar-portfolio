@@ -14,19 +14,18 @@ export function Experience() {
             <div className="eyebrow">Experience</div>
             <h2 className="section-title" style={{ marginTop: 16 }}>Experience</h2>
             <p className="section-sub" style={{ marginTop: 22 }}>
-              Real work. Real teams. Real shipping. Backend systems, banking workflows, and enterprise data — across three companies in 14 months.
+              Real work. Real teams. Real shipping. Backend systems, banking workflows, and enterprise data — across four organizations.
             </p>
           </div>
-          <div className="timeline">
+          <div className="exp-list">
             {experience.map((e) => (
-              <div key={e.n} className="exp-card reveal">
-                <div className="exp-num">{e.n}</div>
-                <div>
+              <div key={e.n} className="exp-row reveal">
+                <div className="exp-logo" style={{ background: e.color }}>{e.logo}</div>
+                <div className="exp-body">
                   <div className="exp-title">{e.title}</div>
-                  <div className="exp-meta">
-                    <div className="exp-company">{e.company}</div>
-                    <div className="exp-date">{e.date}</div>
-                  </div>
+                  <div className="exp-company">{e.company}</div>
+                  <div className="exp-date">{e.date}</div>
+                  <div className="exp-type">{e.type}</div>
                   <p className="exp-desc">{e.desc}</p>
                   <div className="exp-tags">
                     {e.tags.map((t) => (

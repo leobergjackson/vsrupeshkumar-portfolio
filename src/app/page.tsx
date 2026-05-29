@@ -10,6 +10,7 @@ import { Skills } from "@/components/sections/Skills";
 import { Engagement } from "@/components/sections/Engagement";
 import { Experience } from "@/components/sections/Experience";
 import { Programs } from "@/components/sections/Programs";
+import { WorldMap } from "@/components/sections/WorldMap";
 import { Edge } from "@/components/sections/Edge";
 import { FAQ } from "@/components/sections/FAQ";
 import { Contact } from "@/components/sections/Contact";
@@ -40,6 +41,7 @@ export default function Home() {
         <Engagement openDrawer={() => setDrawerOpen(true)} />
         <Experience />
         <Programs />
+        <WorldMap />
         <Edge />
         <FAQ />
         <Contact openDrawer={() => setDrawerOpen(true)} />

@@ -165,31 +165,82 @@ export const skills = [
   { n: "11", domain: "Spoken Languages", items: "English (Professional) · German (A1, in progress) · Japanese (N5, in progress)" },
 ];
 
-export const experience = [
+export type Experience = {
+  n: string;
+  title: string;
+  company: string;
+  date: string;
+  type: string;
+  desc: string;
+  tags: string[];
+  logo: string;   // monogram shown in the company badge
+  color: string;  // brand color for the badge
+};
+
+export const experience: Experience[] = [
   {
     n: "01",
     title: "Summer Intern",
     company: "Indian Bank",
-    date: "May 2026 – June 2026 · On-site, Chennai",
+    date: "May 2026 – Present · 1 mo",
+    type: "Internship · On-site · Chennai, India",
     desc: "Gained practical exposure to core banking workflows, transaction processing systems, and regulatory compliance frameworks in a large public-sector FinTech environment.",
     tags: ["FinTech", "Banking Systems", "Digital Infrastructure"],
+    logo: "IB",
+    color: "#1A3A8F",
   },
   {
     n: "02",
-    title: "Full Stack SDE Intern — Backend Engineering",
-    company: "L2M (a subsidiary of Boston Harbor Consulting)",
-    date: "January 2026 – March 2026 · On-site",
-    desc: "Built and shipped backend features for government and enterprise applications used by international clients. Implemented authentication flows, PostgreSQL/MySQL schema design, query optimizations. Participated in Agile sprints and code reviews, improving API response times through targeted refactoring.",
+    title: "Full Stack Associate Trainee",
+    company: "Boston Harbor Consulting",
+    date: "Jan 2026 – Mar 2026 · 3 mos",
+    type: "Internship · On-site · Chennai, India",
+    desc: "Intern at L2M, a subsidiary of Boston Harbor Consulting. Built and shipped backend features for government and enterprise applications used by international clients — authentication flows, PostgreSQL/MySQL schema design, and query optimizations. Participated in Agile sprints and code reviews, improving API response times through targeted refactoring.",
     tags: ["Backend", "PostgreSQL", "MySQL", "Auth Flows", "Agile"],
+    logo: "BH",
+    color: "#0E7C66",
   },
   {
     n: "03",
     title: "Intern — Data Analyst",
-    company: "STRAIVE",
-    date: "October 2025 – November 2025 · On-site",
+    company: "Straive",
+    date: "Oct 2025 – Nov 2025 · 2 mos",
+    type: "Internship · On-site · Chennai, India",
     desc: "Cleaned, validated, and analyzed enterprise datasets to improve data accuracy and downstream reporting reliability. Authored reusable Excel automation workflows reducing manual processing time on recurring deliverables.",
     tags: ["Data", "Analytics", "Excel Automation", "Reporting"],
+    logo: "St",
+    color: "#E8581C",
   },
+  {
+    n: "04",
+    title: "Charter Member",
+    company: "Toastmasters International",
+    date: "Mar 2025 – Oct 2025 · 8 mos",
+    type: "Part-time · On-site · Chennai, India",
+    desc: "Founding charter member of a Toastmasters club. Developed public speaking, leadership, and structured communication skills through regular prepared and impromptu speaking sessions and peer evaluation.",
+    tags: ["Public Speaking", "Leadership", "Communication"],
+    logo: "TM",
+    color: "#772432",
+  },
+];
+
+export type Visited = {
+  city: string;
+  country: string;
+  flag: string;
+  lat: number;
+  lng: number;
+  note: string;
+  home?: boolean;
+};
+
+// Places pinned on the world map — "where I've been".
+export const visited: Visited[] = [
+  { city: "Chennai", country: "India", flag: "🇮🇳", lat: 13.08, lng: 80.27, note: "Home base · Chennai Institute of Technology", home: true },
+  { city: "Taipei", country: "Taiwan", flag: "🇹🇼", lat: 25.03, lng: 121.56, note: "MCUT · NVIDIA · July 2026" },
+  { city: "Munich", country: "Germany", flag: "🇩🇪", lat: 48.14, lng: 11.58, note: "BMW · Airbus · TU Munich · 2025" },
+  { city: "Paris", country: "France", flag: "🇫🇷", lat: 48.86, lng: 2.35, note: "UPEC · Space Academy · 2025–26" },
+  { city: "Lille", country: "France", flag: "🇫🇷", lat: 50.63, lng: 3.06, note: "University of Lille · 2025" },
 ];
 
 export const programs = [
