@@ -16,10 +16,10 @@
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.15);
 
-  --font-display: "Syne", "Space Grotesk", system-ui, sans-serif;
+  --font-display: "Space Mono", "JetBrains Mono", monospace;
   --font-mono: "Space Mono", "JetBrains Mono", monospace;
-  --font-body: "DM Sans", system-ui, sans-serif;
-  --font-code: "JetBrains Mono", "Space Mono", monospace;
+  --font-body: "Space Mono", "JetBrains Mono", monospace;
+  --font-code: "Space Mono", "JetBrains Mono", monospace;
 
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
