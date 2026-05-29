@@ -69,8 +69,8 @@ export default function GlobeView() {
         backgroundColor="rgba(0,0,0,0)"
         globeImageUrl="/earth-night.jpg"
         showAtmosphere
-        atmosphereColor={ACCENT}
-        atmosphereAltitude={0.18}
+        atmosphereColor="#AEB9C7"
+        atmosphereAltitude={0.16}
         pointsData={points}
         pointLat="lat"
         pointLng="lng"
