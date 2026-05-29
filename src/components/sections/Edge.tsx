@@ -21,7 +21,7 @@ export function Edge() {
 
         <div className="bento">
           <div className="bento-tile white reveal">
-            <div className="stat-num"><Counter end="1100" suffix="+" /></div>
+            <div className="stat-num"><Counter end="1200" suffix="+" /></div>
             <div className="stat-label">DSA problems solved</div>
           </div>
           <div className="bento-tile visual reveal">
@@ -39,7 +39,7 @@ export function Edge() {
             <div className="bento-visual"><BgWorldMap /></div>
           </div>
           <div className="bento-tile dark reveal">
-            <div className="stat-num"><Counter end="10" suffix="+" /></div>
+            <div className="stat-num"><Counter end="11" suffix="x" /></div>
             <div className="stat-label">hackathon finals</div>
           </div>
           <div className="bento-tile visual reveal">

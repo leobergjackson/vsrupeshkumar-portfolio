@@ -14,6 +14,7 @@ export const typingPhrases = [
   "Engineering ZKredit — ZK credit protocol",
   "Building RL benchmarks for LLM agents",
   "LeetCode Knight · Top 3.51% worldwide",
+  "11x Hackathon Finalist · Archer 🏹",
   "Open Source · MIT Licensed",
   "Chennai → Taiwan → Germany → France",
 ];
@@ -159,7 +160,7 @@ export const skills = [
   { n: "06", domain: "Web3 / Blockchain", items: "Ethereum · Solidity · Smart Contracts · Zero-Knowledge Proofs · Hydra" },
   { n: "07", domain: "Cloud & DevOps", items: "AWS · Azure · Google Cloud · Docker · Kubernetes · Linux CLI · Git · GitHub · GitLab" },
   { n: "08", domain: "Hardware & IoT", items: "Arduino · Raspberry Pi · Jetson Nano" },
-  { n: "09", domain: "Competitive Programming", items: "LeetCode Knight (peak 1938, top 3.51%) · Codeforces Specialist (1500+) · CodeChef 4-Star (1674) · 1100+ problems solved" },
+  { n: "09", domain: "Competitive Programming", items: "11x Hackathon Finalist · LeetCode Knight (peak 1938, top 3.51%) · Codeforces Specialist (1500+, #1 global in a Div.3 round) · CodeChef 4-Star (1674) · 1200+ problems solved · 95 Hard" },
   { n: "10", domain: "Tools & Automation", items: "Postman · Figma · Prettier · openclaw · n8n" },
   { n: "11", domain: "Spoken Languages", items: "English (Professional) · German (A1, in progress) · Japanese (N5, in progress)" },
 ];
@@ -230,10 +231,13 @@ export const logoRowA = ["MCUT", "NVIDIA", "BMW", "Airbus", "Volkswagen Autostad
 export const logoRowB = ["Messe München", "UPEC", "University of Lille", "Chennai Institute of Technology", "Indian Bank", "L2M", "STRAIVE"];
 
 export const certifications = [
+  { issuer: "Forage · JPMorganChase", name: "Investment Banking Job Simulation · 2026" },
+  { issuer: "Kestra", name: "Kestra Fundamentals · Workflow Orchestration · 2026" },
+  { issuer: "Toastmasters International", name: "Public Speaking Skills Professional Certificate · 2025" },
+  { issuer: "NPTEL", name: "Internet of Things (IoT)" },
   { issuer: "EO College / ESA", name: "ML for Earth Observation · 2025" },
   { issuer: "Cisco Networking Academy", name: "CCNA · Modern AI · Data Science · Cybersecurity · JS Essentials" },
   { issuer: "MongoDB University", name: "MongoDB Basics for Students" },
-  { issuer: "Toastmasters International", name: "Active Member · Public Speaking & Debates" },
   { issuer: "Youth Talk 2025", name: "Regional Semi-Finalist" },
 ];
 

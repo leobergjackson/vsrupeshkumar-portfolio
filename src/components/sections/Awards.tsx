@@ -11,7 +11,7 @@ export function Awards() {
             <div className="award-icon lc">LC</div>
             <div className="eyebrow" style={{ marginTop: 4 }}>LeetCode</div>
             <div className="award-title">Knight Badge</div>
-            <div className="award-sub">Top 3.51% worldwide · 1100+ solved</div>
+            <div className="award-sub">Top 3.51% worldwide · 1200+ solved</div>
           </div>
 
           <div className="award-card featured">
