@@ -1163,33 +1163,6 @@ section {
   text-transform: uppercase;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  body.has-cursor { cursor: none; }
-  body.has-cursor a, body.has-cursor button { cursor: none; }
-  .cursor-dot, .cursor-ring {
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    will-change: transform;
-  }
-  .cursor-dot {
-    width: 8px; height: 8px;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-  }
-  .cursor-ring {
-    width: 32px; height: 32px;
-    border: 1px solid rgba(0,255,178,0.4);
-    transition: width 200ms var(--ease), height 200ms var(--ease), border-color 200ms;
-  }
-  body.cursor-hover .cursor-ring {
-    width: 56px; height: 56px;
-    border-color: var(--accent);
-  }
-}
 
 .reveal {
   opacity: 0;

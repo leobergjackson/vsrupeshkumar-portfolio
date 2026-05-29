@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
-import { CustomCursor } from "@/components/layout/CustomCursor";
 import { Hero } from "@/components/sections/Hero";
 import { Awards } from "@/components/sections/Awards";
 import { Projects } from "@/components/sections/Projects";
@@ -29,7 +28,6 @@ export default function Home() {
   return (
     <>
       <div className="grain" />
-      <CustomCursor />
 
       <Navbar theme={theme} setTheme={setTheme} openDrawer={() => setDrawerOpen(true)} />
 
