@@ -820,47 +820,34 @@ section {
 .exp-desc { font-size: 14.5px; line-height: 1.6; color: var(--text-muted); margin-top: 12px; }
 .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 
-/* World map — "Where I've been" */
-.map-wrap {
-  margin-top: 56px;
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 32px;
+/* Interactive globe — "Where I've been" */
+.globe-wrap {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-[data-theme="light"] .map-wrap { box-shadow: 0 2px 24px rgba(0,0,0,0.05); }
-.map-svg { width: 100%; height: auto; display: block; }
-.map-land path {
-  fill: var(--bg-3);
-  stroke: var(--border-strong);
-  stroke-width: 0.4;
-  vector-effect: non-scaling-stroke;
-  transition: fill 400ms var(--ease);
+.globe-canvas {
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  justify-content: center;
+  cursor: grab;
 }
-[data-theme="light"] .map-land path { fill: #E4E7DE; stroke: rgba(0,0,0,0.12); }
-.map-routes line {
-  stroke: var(--accent);
-  stroke-width: 1;
-  stroke-dasharray: 3 4;
-  opacity: 0.5;
-  vector-effect: non-scaling-stroke;
-}
-.map-pins .pin-dot { fill: var(--accent); }
-.map-pins .pin.home .pin-dot { fill: var(--accent-warm); }
-.map-pins .pin-halo {
-  fill: var(--accent);
-  opacity: 0.25;
-  transform-origin: center;
-  animation: pinPulse 2.4s ease-out infinite;
-}
-.map-pins .pin.home .pin-halo { fill: var(--accent-warm); }
-@keyframes pinPulse {
-  0% { transform: scale(0.6); opacity: 0.45; }
-  70% { transform: scale(1.8); opacity: 0; }
-  100% { opacity: 0; }
+.globe-canvas:active { cursor: grabbing; }
+.globe-canvas canvas { display: block; }
+.globe-loading {
+  min-height: 420px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
 }
 
 .map-legend {
+  width: 100%;
+  max-width: 900px;
   margin-top: 28px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
